@@ -1,8 +1,19 @@
+import { Sidebar } from './components/Sidebar'
 import { Header } from './components/Header'
 
-export function App() {
+import styles from './App.module.css'
 
+import './global.css'
+
+export const App = () => {
   return (
-    <Header />
+    <>
+      <Header />
+
+      <div className={styles.wrapper}>
+        <Sidebar />
+        <main></main>
+      </div>
+    </>
   )
 }
