@@ -15,6 +15,16 @@
   color: var(--gray-400);
 }
 
+@media (max-width: 768px) {
+  .post > header {
+   flex-direction: column;
+  }
+
+  .post > header time {
+    margin-top: 1.5rem;
+  }
+}
+
 .post + .post {
   margin-top: 2rem;
 }
