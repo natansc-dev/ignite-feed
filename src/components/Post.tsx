@@ -44,6 +44,23 @@ export const Post = ({ author, content, published_at }: PostProps) => {
     setNewComment('')
   }
 
+  function handleNewCommentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    e.target.setCustomValidity('')
+    setNewComment(e.target.value)
+  }
+
+  function handleNewCommentInvalid(e: React.InvalidEvent<HTMLTextAreaElement>) {
+    e.target.setCustomValidity('Esse campo é obrigatório!')
+  }
+
+  function deleteComment(commentToDelete: string) {
+    const commentsWithoutDeleteOne = comments.filter(comment => comment !== commentToDelete)
+
+    setComments(commentsWithoutDeleteOne)
+  }
+
+  const isNewCommentEmpty = newComment.length === 0
+
   return (
     <article className={styles.post}>
       <header>
@@ -67,18 +84,20 @@ export const Post = ({ author, content, published_at }: PostProps) => {
         <strong>Deixe seu feedback</strong>
 
         <textarea
-          onChange={(e) => setNewComment(e.target.value)}
+          onChange={handleNewCommentChange}
           value={newComment}
           placeholder='Deixe um comentário'
+          onInvalid={handleNewCommentInvalid}
+          required
         />
 
         <footer>
-          <button type='submit'>Publicar</button>
+          <button type='submit' disabled={isNewCommentEmpty} >Publicar</button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
-        {comments.map(comment => <Comment key={comment} content={comment} />)}
+        {comments.map(comment => <Comment key={comment} content={comment} onDeleteComment={deleteComment} />)}
       </div>
     </article>
   )
